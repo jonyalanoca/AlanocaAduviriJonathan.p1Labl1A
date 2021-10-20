@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+overriddenByCSS=,syntaxcolor.live.bracket.matching.italic,syntaxcolor.live.bracket.matching.strikethrough,syntaxcolor.live.bracket.matching.underline,syntaxcolor.live.bracket.matching.enabled,syntaxcolor.live.bracket.matching.bold,syntaxcolor.private.non.system.symbol,syntaxcolor.symbol.conflict.local,syntaxcolor.live.bracket.matching.color,syntaxcolor.public.non.system.symbols,syntaxcolor.symbol.package,syntaxcolor.symbol.system,syntaxcolor.symbol.local,syntaxcolor.number.literal,syntaxcolor.comment,syntaxcolor.string.literal,
+syntaxcolor.comment=101,114,126
+syntaxcolor.live.bracket.matching.bold=false
+syntaxcolor.live.bracket.matching.color=153,202,146
+syntaxcolor.live.bracket.matching.enabled=true
+syntaxcolor.live.bracket.matching.italic=false
+syntaxcolor.live.bracket.matching.strikethrough=false
+syntaxcolor.live.bracket.matching.underline=false
+syntaxcolor.number.literal=249,144,81
+syntaxcolor.private.non.system.symbol=187,123,180
+syntaxcolor.public.non.system.symbols=236,86,101
+syntaxcolor.string.literal=153,202,146
+syntaxcolor.symbol.conflict.local=255,0,0
+syntaxcolor.symbol.local=94,181,180
+syntaxcolor.symbol.package=236,86,101
+syntaxcolor.symbol.system=196,143,198

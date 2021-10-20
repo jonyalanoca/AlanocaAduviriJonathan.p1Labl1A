@@ -1,0 +1,20 @@
+/*
+ * validaciones.c
+ *
+ *  Created on: 20 oct. 2021
+ *      Author: Jony
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "validaciones.h"
+char confirmarSalir(){
+		char aux;
+		printf("Esta saliendo del programa. Confirme con una (s): ");
+		fflush(stdin);
+		scanf("%c", &aux);
+		if(aux>65 && aux<91){
+			aux=aux+32;
+		}
+	return aux;
+}

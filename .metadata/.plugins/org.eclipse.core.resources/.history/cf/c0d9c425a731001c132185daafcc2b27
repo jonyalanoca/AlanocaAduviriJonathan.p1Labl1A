@@ -1,0 +1,18 @@
+/*
+ * validaciones.h
+ *
+ *  Created on: 20 oct. 2021
+ *      Author: Jony
+ */
+
+#ifndef VALIDACIONES_H_
+#define VALIDACIONES_H_
+
+
+
+#endif /* VALIDACIONES_H_ */
+/// @fn char confirmarSalir()
+/// @brief  Confirma si se desea salir del programa o no.Pide un char y convierte en minuscula
+///
+/// @return el caracter que el usuario ingresa
+char confirmarSalir();
