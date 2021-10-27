@@ -1,0 +1,23 @@
+/*
+ * hardC.c
+ *
+ *  Created on: 27 oct. 2021
+ *      Author: Jony
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "validaciones.h"
+#include "funciones.h"
+#include "hardC.h"
+
+void hardCoreAutos(eAtuo autos){
+	int
+	autos[libre].id=auxId;
+	autos[libre].idMarca=auxIdMarca;
+	autos[libre].idColor=auxIdColor;
+	autos[libre].caja=auxCaja;
+	autos[libre].isEmpty=0;
+}
+

@@ -1,5 +1,5 @@
-11:50:12 **** Incremental Build of configuration Debug for project AlanocaJonathanParcial1_laboratorio ****
+11:09:27 **** Incremental Build of configuration Debug for project AlanocaJonathanParcial1_laboratorio ****
 Info: Internal Builder is used for build
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\AlanocaJonathanParcial1_laboratorio.o" "..\\src\\AlanocaJonathanParcial1_laboratorio.c" 
-gcc -o AlanocaJonathanParcial1_laboratorio.exe "src\\AlanocaJonathanParcial1_laboratorio.o" "src\\validaciones.o" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\informes.o" "..\\src\\informes.c" 
+gcc -o AlanocaJonathanParcial1_laboratorio.exe "src\\AlanocaJonathanParcial1_laboratorio.o" "src\\funciones.o" "src\\hardC.o" "src\\informes.o" "src\\validaciones.o" 
 Info: Nothing to build for AlanocaJonathanParcial1_laboratorio

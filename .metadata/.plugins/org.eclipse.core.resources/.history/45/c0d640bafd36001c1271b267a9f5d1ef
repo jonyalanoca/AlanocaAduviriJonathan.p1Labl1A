@@ -1,0 +1,30 @@
+/*
+ * hardC.c
+ *
+ *  Created on: 27 oct. 2021
+ *      Author: Jony
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "validaciones.h"
+#include "funciones.h"
+#include "hardC.h"
+
+void hardCAutos(eAuto autos[],int* id, int* flagA){
+	int idMarca[5]={1000,1000,1004,1004,1002};
+	int idColor[5]={5000,5000,5004,5004,5002};
+	char caja[5]={'a','m','a','m','a'};
+	for(int i=0; i<5;i++){
+		autos[i].id=*id;
+		(*id)++;
+		autos[i].idMarca=idMarca[i];
+		autos[i].idColor=idColor[i];
+		autos[i].caja=caja[i];
+		autos[i].isEmpty=0;
+		(*flagA)++;
+	}
+
+}
+

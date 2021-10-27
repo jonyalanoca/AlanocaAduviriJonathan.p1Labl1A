@@ -12,77 +12,47 @@
 #include <stdlib.h>
 #include <string.h>
 #include "validaciones.h"
+#include "funciones.h"
+#include "hardC.h"
+#include "informes.h"
 #define TAM_AUTO 10
+#define TAM_TRAB 10
 #define TAM_MARCA_COLOR 5
 #define TAM_SERVICIO 4
-
-typedef struct{
-	int dia;
-	int mes;
-	int anio;
-}eFecha;
-typedef struct{
-	int id;
-	char descripcion[20];
-}eMarca;
-typedef struct{
-	int id;
-	char nombreColor[20];
-}eColor;
-
-typedef struct{
-	int id;
-	int idMarca;
-	int idColor;
-	char caja;
-	int isEmpty;
-}eAuto;
-typedef struct{
-	int id;
-	char descripcion[20];
-	float precio;
-}eServicio;
-typedef struct{
-	int id;
-	int patente;
-	int idServicio;
-	eFecha fecha;
-}eTrabajo;
-int altaAuto(eAuto autos[],int lenAuto, int* idAuto,eMarca marcas[],int lenMarcaColor, eColor colores[]);
-int iniciarAutos(eAuto autos[],int lenAuto);
-int buscarLibreAuto(eAuto autos[],int lenAuto);
-int buscarIdColor(int id,eColor colores[],int lenColor);
-int buscarIdMarca(int id,eMarca marcas[],int lenMarca);
-void mostrarAuto(eAuto autos, char marca[], char color[]);
-int mostrarAutos(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
-void mostrarServicio(eServicio servicios);
-int mostrarServicios(eServicio servicios[],int lenServicio);
-void mostrarMarca(eMarca marcas);
-int mostrarMarcas(eMarca marcas[],int lenMarca);
-void mostrarColor(eColor colores);
-int mostrarColores(eColor colores[],int lenColor);
-int menu();
+#define TAM_CLIENTE 5
 
 int main(void) {
 	setbuf(stdout,NULL);
 	char seguir='n';
+	int flagAuto=0;
+	int flagTrabajo=0;
 	int idAuto=10000;
 	eAuto autos[TAM_AUTO];
-	eMarca marcas[5]={
+	int idTrabajo=20000;
+	eTrabajo trabajos[TAM_TRAB];
+	eCliente clientes[TAM_CLIENTE]={
+			{30000,"Jose",'m'},
+			{30001,"Ana",'f'},
+			{30002,"Rodrigo",'m'},
+			{30003,"Esther",'f'},
+			{30004,"Carlor",'m'},
+
+	};
+	eMarca marcas[TAM_MARCA_COLOR]={
 			{1000,"Renault"},
 			{1001,"Ford"},
 			{1002,"Fiat"},
 			{1003,"Chevrolet"},
 			{1004,"Peugeot"}
 	};
-	eColor colores[5]={
+	eColor colores[TAM_MARCA_COLOR]={
 			{5000,"N"},
 			{5001,"Blanco"},
 			{5002,"Rojo"},
 			{5003,"Gris"},
 			{5004,"Azul"}
 	};
-	eServicio servicios[4]={
+	eServicio servicios[TAM_SERVICIO]={
 		{20000,"Lavado",450},
 		{20001,"Pulid",500},
 		{20002,"Encerado",600},
@@ -92,24 +62,52 @@ int main(void) {
 	if(!iniciarAutos(autos,TAM_AUTO)){
 		printf("Error al inicializar altos.\n");
 	}
+	if(!iniciarTrabajos(trabajos,TAM_TRAB)){
+		printf("Error al inicializar trabajos.\n");
+	}
+	hardCAutos(autos, &idAuto,&flagAuto);
+	hardCTrabajos(trabajos,&idTrabajo,&flagTrabajo);
 	do{
 	    system("cls");
 	    switch(menu()){
 	        case 1:
-	        	if(!altaAuto(autos, TAM_AUTO,&idAuto,marcas,TAM_MARCA_COLOR, colores)){
+	        	if(!altaAuto(autos, TAM_AUTO,&idAuto,marcas,TAM_MARCA_COLOR, colores, clientes,TAM_CLIENTE)){
 	        		printf("No se puedo cargar los datos\n");
 	        	}
-	        	mostrarAutos(autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores);
-
+	        	else{
+	        		flagAuto++;
+	        	}
 	            break;
 	        case 2:
-
+	        	if (flagAuto>0){
+					if(!modificarAuto(autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores, clientes, TAM_CLIENTE)){
+						printf("No se puedo cargar los datos\n");
+					}
+	        	}
+	        	else{
+	        		printf("Primero tenemos que dar de alta un auto.\n");
+	        	}
 	            break;
 	        case 3:
+	        	if(flagAuto>0){
+	        		if(!borrarAuto(autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores, clientes,TAM_CLIENTE)){
+						printf("No se puedo cargar los datos\n");
+					}
+	        		flagAuto--;
+	        	}
+	        	else{
+					printf("Primero tenemos que dar de alta un auto.\n");
+				}
 
 	            break;
 	        case 4:
-
+	        	if(flagAuto>0){
+					ordenarAutos(autos ,TAM_AUTO,marcas,TAM_MARCA_COLOR);
+					mostrarAutos(autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores, clientes, TAM_CLIENTE);
+	        	}
+	        	else{
+					printf("Primero tenemos que dar de alta un auto.\n");
+				}
 				break;
 	        case 5:
 	        	if(!mostrarMarcas(marcas,TAM_MARCA_COLOR)){
@@ -127,12 +125,32 @@ int main(void) {
 				}
 				break;
 	        case 8:
-
+	        	if(flagAuto>0){
+					if(!altaTrabajo(trabajos, TAM_TRAB, &idTrabajo,autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores, servicios, TAM_SERVICIO, clientes,TAM_CLIENTE )){
+						printf("No se puedo cargar los datos.\n");
+					}
+					else{
+						flagTrabajo=1;
+					}
+	        	}
+	        	else{
+	        		printf("Primero tenemos que dar de alta un auto.\n");
+	        	}
 				break;
 	        case 9:
-
+	        	if (flagTrabajo){
+					if(!mostrarTrabajos(trabajos, TAM_TRAB, servicios, TAM_SERVICIO)){
+						printf("No se puedo motrar.\n");
+					}
+	        	}
+	        	else{
+	        		printf("Primero debemos hacer algun trabajo\n");
+	        	}
 	            break;
 	        case 10:
+	        	informes(trabajos, TAM_TRAB,autos, TAM_AUTO,marcas,TAM_MARCA_COLOR, colores, servicios, TAM_SERVICIO, clientes, TAM_CLIENTE);
+	        	break;
+	        case 11:
 	        	seguir=confirmarSalir();
 	            break;
 	        default:
@@ -144,197 +162,4 @@ int main(void) {
 	return EXIT_SUCCESS;
 }
 
-int altaAuto(eAuto autos[],int lenAuto, int* idAuto,eMarca marcas[],int lenMarcaColor, eColor colores[]){
-	int todoOk=0;{
-	if(autos!=NULL &&lenAuto>0){
-		int auxId;
-		int auxIdMarca;
-		int auxIdColor;
-		char auxCaja;
-		int libre;
-		printf("--------Alta de autos--------\n\n");
-		libre=buscarLibreAuto(autos,lenAuto);
-		if(libre!=-1){
-			auxId=*idAuto;
-			(*idAuto)++;
-			mostrarMarcas(marcas, lenMarcaColor);
-			do{
-				validarCargarEntero("Ingrese el id de la marca", &auxIdMarca);
-			}while(buscarIdMarca(auxIdMarca, marcas, lenMarcaColor)==-1);
-			mostrarColores(colores,lenMarcaColor);
-			do{
-				validarCargarEntero("Ingrese el id del color", &auxIdColor);
-			}while(buscarIdColor(auxIdColor, colores, lenMarcaColor)==-1);
-			if(!validarDosChar("Ingrese el tipo de caja de auto Manual (m) - Automatica (a)", &auxCaja, 'm','a')){
-				printf("Fallo. No se pudo cargar");
-			}
-			autos[libre].id=auxId;
-			autos[libre].idMarca=auxIdMarca;
-			autos[libre].idColor=auxIdColor;
-			autos[libre].caja=auxCaja;
-			autos[libre].isEmpty=0;
-			todoOk=1;
-			}
-		}
-		else{
-			printf("No espacio disponible");
-		}
-	}
-	return todoOk;
-}
-void mostrarAuto(eAuto autos, char marca[], char color[]){
-	printf("%d	%s	%s	%c", autos.id, marca,color, autos.caja);
-}
-int mostrarAutos(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]){
-	int todoOk=0;
-	if(autos!=NULL && lenAuto>0){
 
-			printf("--------Lista de Autos--------\n\n");
-			printf("ID		MARCA		COLOR	T-CAJA\n");
-			for(int i=0;i<lenAuto;+i++){
-
-				mostrarAuto(autos[i],
-						marcas[buscarIdMarca(autos[i].idMarca,marcas,lenMarcaColor)].descripcion
-						,colores[buscarIdColor(autos[i].idColor,colores,lenMarcaColor)].nombreColor);
-			}
-			todoOk=1;
-
-	}
-	return todoOk;
-}
-/*int ordenarAutos(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor){
-	int todoOk=0;
-	int aux;
-	if(autos!=NULL && lenAuto>0){
-		for(int i=0;i<lenAuto-1;i++){
-			for(int j=i+1;j<lenAuto;j++){
-				if(autos[i].)
-
-			}
-		}
-	}
-	return todoOk;
-}*/
-int iniciarAutos(eAuto autos[],int lenAuto){
-	int todoOk=0;
-	if(autos!=NULL &&lenAuto>0){
-		for(int i =0; i<lenAuto; i++){
-			autos[i].isEmpty=1;
-		}
-		todoOk=1;
-	}
-	return todoOk;
-}
-int buscarLibreAuto(eAuto autos[],int lenAuto){
-	int todoOk=-1;
-	if(autos!=NULL &&lenAuto>0){
-		for(int i =0; i<lenAuto; i++){
-			if(autos[i].isEmpty==1){
-				todoOk=i;
-				break;
-			}
-		}
-	}
-	return todoOk;
-}
-int buscarIdColor(int id,eColor colores[],int lenColor){
-	int todoOk=-1;
-	if(colores!=NULL && lenColor>0){
-		for(int i=0; i<lenColor;i++){
-			if(id==colores[i].id){
-				todoOk=i;
-				break;
-			}
-		}
-
-	}
-	return todoOk;
-}
-int buscarIdMarca(int id,eMarca marcas[],int lenMarca){
-	int todoOk=-1;
-	if(marcas!=NULL && lenMarca>0){
-		for(int i=0; i<lenMarca;i++){
-			if(id==marcas[i].id){
-				todoOk=i;
-				break;
-			}
-		}
-
-	}
-	return todoOk;
-}
-
-void mostrarServicio(eServicio servicios){
-	printf("%d	%10s	 %.2f\n", servicios.id, servicios.descripcion, servicios.precio);
-}
-int mostrarServicios(eServicio servicios[],int lenServicio){
-	int todoOk=0;{
-		if(servicios!=NULL&&lenServicio>0){
-			printf("--------Lista de Servicios--------\n\n");
-			printf("ID	  SERVICIO       PRECIO\n");
-			for(int i=0;i<lenServicio;+i++){
-				mostrarServicio(servicios[i]);
-			}
-			todoOk=1;
-		}
-	}
-	return todoOk;
-}
-
-void mostrarMarca(eMarca marcas){
-	printf("%d	%s\n", marcas.id, marcas.descripcion);
-}
-int mostrarMarcas(eMarca marcas[],int lenMarca){
-	int todoOk=0;{
-		if(marcas!=NULL&&lenMarca>0){
-			printf("--------Lista de Marcas--------\n\n");
-			printf("ID	MARCA\n");
-			for(int i=0;i<lenMarca;+i++){
-				mostrarMarca(marcas[i]);
-			}
-			todoOk=1;
-		}
-	}
-	return todoOk;
-}
-
-void mostrarColor(eColor colores){
-	printf("%d	%s\n", colores.id, colores.nombreColor);
-}
-
-int mostrarColores(eColor colores[],int lenColor){
-	int todoOk=0;{
-		if(colores!=NULL&&lenColor>0){
-			printf("--------Lista de Colores--------\n\n");
-			printf("ID	COLOR\n");
-			for(int i=0;i<lenColor;+i++){
-				mostrarColor(colores[i]);
-			}
-			todoOk=1;
-		}
-	}
-	return todoOk;
-}
-
-int menu(){
-	int opcion;
-	printf("\t=-=-=-=-AUTO-SEVICIO-=-=-=-=-=\n");
-	printf("\t_______________Menu_________________\n\n");
-	printf("\t1-ALTA AUTO\n");
-	printf("\t2-MODIFICAR AUTO\n");
-	printf("\t3-BAJA AUTO\n");
-	printf("\t4-LISTAR AUTOS\n");
-	printf("\t5-LISTAR MARCAS\n");
-	printf("\t6-LISTAR COLORES\n");
-	printf("\t7-LISTAR SERVICIOS\n");
-	printf("\t8-ALTA TRABAJO\n");
-	printf("\t9- LISTAR TRABAJOS\n");
-	printf("\t10-SALIR\n");
-	printf("\t____________________________________\n\n");
-	printf("\tIngrese una opcion: ");
-	fflush(stdin);
-	scanf("%d",&opcion);
-	fflush(stdin);
-	system("cls");
-	return opcion;
-}

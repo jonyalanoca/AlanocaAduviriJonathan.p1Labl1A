@@ -215,3 +215,66 @@ int validarDosChar(char mensaje[],char* varChar, char letra1, char letra2){
 	}
 	return todoOk;
 }
+
+int validarCargarFecha(char mensaje[], int* dia, int* mes, int* anio){
+	int todoOk=0;
+	if(mensaje!=NULL && dia !=NULL && mes !=NULL && anio!=NULL){
+		char auxString[30];
+		int i=0;
+		char auxDMA[4];
+		do{
+			todoOk=1;
+			printf("%s: ", mensaje);
+			fflush(stdin);
+			gets(auxString);
+			if(auxString[0]=='\0'){
+				printf("No ingreso nada aun. ");
+				todoOk=0;
+			}
+			else if(strlen(auxString)>10){
+				printf("Por favor respete el formato (dd/mm/aaaa)\n");
+				todoOk=0;
+			}
+			else{
+				i=0;
+				while(auxString[i]!='\0'){
+					if(i==2 || i==5){
+						if(auxString[i]!='/'){
+							printf("Por favor respete el formato (dd/mm/aaaa)\n");
+							todoOk=0;
+							break;
+						}
+					}
+					else{
+						if(auxString[i]<'0' || auxString[i]>'9'){
+							printf("Por favor respete el formato (dd/mm/aaaa)\n");
+							todoOk=0;
+							break;
+						}
+					}
+					i++;
+				}
+
+			}
+		}while(!todoOk);
+
+		auxDMA[0]=auxString[0];
+		auxDMA[1]=auxString[1];
+		auxDMA[2]='\0';
+		*dia=atoi(auxDMA);
+		auxDMA[0]=auxString[3];
+		auxDMA[1]=auxString[4];
+		auxDMA[2]='\0';
+		*mes=atoi(auxDMA);
+		auxDMA[0]=auxString[6];
+		auxDMA[1]=auxString[7];
+		auxDMA[2]=auxString[8];
+		auxDMA[3]=auxString[9];
+		auxDMA[4]='\0';
+		*anio=atoi(auxDMA);
+
+		todoOk=1;
+
+	}
+	return todoOk;
+}

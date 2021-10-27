@@ -1,0 +1,80 @@
+/*
+ * funciones.h
+ *
+ *  Created on: 27 oct. 2021
+ *      Author: Jony
+ */
+
+#ifndef FUNCIONES_H_
+#define FUNCIONES_H_
+
+typedef struct{
+	int dia;
+	int mes;
+	int anio;
+}eFecha;
+typedef struct{
+	int id;
+	char descripcion[20];
+}eMarca;
+typedef struct{
+	int id;
+	char nombreColor[20];
+}eColor;
+
+typedef struct{
+	int id;
+	int idMarca;
+	int idColor;
+	char caja;
+	int isEmpty;
+}eAuto;
+typedef struct{
+	int id;
+	char descripcion[20];
+	float precio;
+}eServicio;
+typedef struct{
+	int id;
+	int patente;
+	int idServicio;
+	eFecha fecha;
+	int isEmpty;
+}eTrabajo;
+
+#endif /* FUNCIONES_H_ */
+int menu();
+int subMenu();
+
+int iniciarAutos(eAuto autos[],int lenAuto);
+int iniciarTrabajos(eTrabajo trabajos[],int lenTrabajo);
+
+
+int altaAuto(eAuto autos[],int lenAuto, int* idAuto,eMarca marcas[],int lenMarcaColor, eColor colores[]);
+int modificarAuto(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+int borrarAuto(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+int altaTrabajo(eTrabajo trabajos[],int lenTrabajo, int* idTrabajo,eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eServicio servicios[],int lenServicio );
+
+int buscarLibreAuto(eAuto autos[],int lenAuto);
+int buscarAuto(eAuto autos[],int lenAuto,int idAuto);
+int buscarIdAuto(eAuto autos[],int lenAuto,int idAuto);
+int buscarIdColor(int id,eColor colores[],int lenColor);
+int buscarIdMarca(int id,eMarca marcas[],int lenMarca);
+int buscarIdServicio(int id,eServicio servicios[],int lenServicio);
+
+int ordenarAutos(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor);
+void mostrarAuto(eAuto autos, char marca[], char color[]);
+int mostrarAutos(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+void mostrarTrabajo(eTrabajo trabajos,int lenTrabajo, char servicio[]);
+int mostrarTrabajos(eTrabajo trabajos[],int lenTrabajo, eServicio servicios[],int lenServicio );
+void mostrarServicio(eServicio servicios);
+int mostrarServicios(eServicio servicios[],int lenServicio);
+void mostrarMarca(eMarca marcas);
+int mostrarMarcas(eMarca marcas[],int lenMarca);
+void mostrarColor(eColor colores);
+int mostrarColores(eColor colores[],int lenColor);
+
+
+
+
+

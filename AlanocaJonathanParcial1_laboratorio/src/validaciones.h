@@ -65,3 +65,13 @@ int validarCargarLetra(char mensaje[],char* varLetra);
 /// @param letra2: valor a comparar
 /// @return retorna 1 si todo sale bien, 0 si la validacion de parametros sale mal
 int validarDosChar(char mensaje[],char* varChar, char letra1, char letra2);
+/// @fn int validarCargarFecha(char[], int*, int*, int*)
+/// @brief permite perdir una fecha con un determiando estilo, valida que se hayan usado los caracteres correstos y guarda el dia
+/// 		mes y anio en distintas variables que le pasamos por parametro.
+///
+/// @param mensaje: mensaje para especificar que dato queremos recibir
+/// @param dia (putero) se guardara el dia
+/// @param mes (putero) se guardara el mes
+/// @param anio (putero) se guardara el anio
+/// @return 0 si algo salio mal, 1 si todo salio bien
+int validarCargarFecha(char mensaje[], int* dia, int* mes, int* anio);

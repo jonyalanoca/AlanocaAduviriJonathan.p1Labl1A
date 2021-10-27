@@ -1,0 +1,29 @@
+/*
+ * informes.h
+ *
+ *  Created on: 27 oct. 2021
+ *      Author: Jony
+ */
+
+#ifndef INFORMES_H_
+#define INFORMES_H_
+
+
+
+#endif /* INFORMES_H_ */
+
+int informes(eTrabajo trabajos[],int lenTrabajo,eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eServicio servicios[],int lenServicio, eCliente clientes[], int lenCliente);
+int menuInformes();
+int mostrarAutoDeUnColor(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eCliente clientes[], int lenCliente);
+
+int mostrarAutoDeUnaMarca(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[],eCliente clientes[],int lenCliente);
+
+int cantidadAutosPorColorYMarca(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+
+int marcaMasElegida(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+int mostrarTrabajosDeUnAuto(eTrabajo trabajos[],int lenTrabajo,eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eServicio servicios[],int lenServicio, eCliente clientes[], int lenCliente);
+int mostrarSumaTrabajosDeUnAuto(eTrabajo trabajos[],int lenTrabajo,eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eServicio servicios[],int lenServicio, eCliente clientes[],int lenCliente);
+int mostrarAutosQueRealizaronServicio(eTrabajo trabajos[],int lenTrabajo,eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[], eServicio servicios[],int lenServicio);
+promedioAutosManualAuto(autos, lenAuto);
+
+

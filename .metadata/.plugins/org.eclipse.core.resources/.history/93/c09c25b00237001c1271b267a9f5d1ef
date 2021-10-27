@@ -1,0 +1,17 @@
+/*
+ * informes.h
+ *
+ *  Created on: 27 oct. 2021
+ *      Author: Jony
+ */
+
+#ifndef INFORMES_H_
+#define INFORMES_H_
+
+
+
+#endif /* INFORMES_H_ */
+
+int informes(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
+int menuInformes();
+int mostrarAutoDeUnColor(eAuto autos[],int lenAuto,eMarca marcas[],int lenMarcaColor,eColor colores[]);
